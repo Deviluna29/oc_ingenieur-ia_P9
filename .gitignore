@@ -133,3 +133,4 @@ dmypy.json
 
 #data
 articles/
+data_azure/
