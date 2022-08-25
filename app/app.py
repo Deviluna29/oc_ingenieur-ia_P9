@@ -27,13 +27,13 @@ def index():
     return render_template('index.html', sended=False, rec_type=REC_TYPE, selected_id=selected_id, selected_type=selected_type)
 
 # Endpoint pour recommander les articles du user sélectionné
-@app.route('/recommend/', methods=["POST"])
+@app.route('/recommend/', methods=["GET","POST"])
 def recommendArticles():
 
     params = {"id": selected_id, "type": REC_TYPE_API[selected_type]}
 
     # Appel vers Azure function pour la recommandation d'articles
-    r = requests.get('https://ocp9-function.azurewebsites.net/api/recommend-article', json=params)
+    r = requests.get('https://ocp9-function.azurewebsites.net/api/recommend-article', json=params, verify=True)
 
     content = r.content.decode("utf-8")
 
