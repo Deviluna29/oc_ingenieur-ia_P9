@@ -1,13 +1,10 @@
 import logging
 import os
-from math import *
-from heapq import nlargest
 import pickle
 import pandas as pd
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 import azure.functions as func
 from azure.storage.blob import BlobClient,  __version__
+import utils
 
 try:
     logging.info("Azure Blob Storage v" + __version__)
@@ -32,52 +29,6 @@ except Exception as ex:
     print('Exception:')
     print(ex)
 
-# Recommandation Content-Based
-def contentBasedRecommendArticle(articles, users, user_id, n=5):
-
-    articles_read = users['click_article_id'].loc[user_id]
-
-    if len(articles_read) == 0:
-        return "L'utilisateur n'a lu aucun article"
-
-    articles_read_embedding = articles.loc[articles_read]
-
-    articles = articles.drop(articles_read)
-
-    matrix = cosine_similarity(articles_read_embedding, articles)
-
-    rec = []
-
-    for i in range(n):
-        coord_x = floor(np.argmax(matrix)/matrix.shape[1])
-        coord_y = np.argmax(matrix)%matrix.shape[1]
-
-        rec.append(int(coord_y))
-
-        matrix[coord_x][coord_y] = 0
-    
-    rec.sort()
-
-    return rec
-
-# Recommandation Collaborative Filtering
-def collaborativeFilteringRecommendArticle(articles, users, user_id, n=5):
-
-    index = list(articles.index)
-
-    articles_read = users['click_article_id'].loc[user_id]
-
-    for ele in articles_read:
-        if ele in index:
-            index.remove(ele)
-
-    results = dict()
-
-    for i in index:
-        pred = model['algo'].predict(user_id, i)
-        results[pred.iid] = pred.est
-    
-    return nlargest(n, results, key = results.get)
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -90,9 +41,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         id = req_body.get('id')
         type = req_body.get('type')
 
-    if id and type and isinstance(id, int) and isinstance(type, str):
+    if isinstance(id, int) and isinstance(type, str):
 
-        recommended = contentBasedRecommendArticle(articles_df, users_df, id) if type == "cb" else collaborativeFilteringRecommendArticle(articles_df, users_df, id)
+        recommended = utils.contentBasedRecommendArticle(articles_df, users_df, id) if type == "cb" else utils.collaborativeFilteringRecommendArticle(model, articles_df, users_df, id)
 
         return func.HttpResponse(str(recommended), status_code=200)
 
