@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="page">
+    <h1>Recommandation d'articles</h1>
+
+    <form method="post" action="/">
+        <div class="form-group w-50 container">
+          <div class="p-2 column">
+            <label for="user_id">Choisir un id de user</label>
+            <label>(entre 0 et 322896)</label>
+          </div>
+          <div class="p-2">
+            <input type="number" id="user_id" name="user" min="0" max="322896" value={{selected_id}} onchange="this.form.submit()">
+          </div>
+        </div>
+        <div class="form-group w-50 container">
+          <div class="p-2">
+            <label for="rec_type">Choisir le type de recommandation</label>
+          </div>
+          <div class="p-2">
+            <select class="form-control" id="rec_type" name="rec" onchange="this.form.submit()">
+                {% for type in rec_type: %}
+                  {% if type==selected_type %}
+                    <option selected>{{type}}</option>
+                  {% else %}
+                    <option>{{type}}</option>
+                  {% endif %}
+                {% endfor %}
+            </select>
+          </div>
+        </div>
+    </form>
+    <div class="container">
+      <form id="content" method="post" action="/recommend">
+        <button type="submit" class="btn btn-primary" onclick="loading();">Soumettre</button>
+      </form>
+      <img id="loading" class="gif" src="{{url_for('static', filename='/')}}loading.gif">
+    </div>
+    {% if sended == True %}
+    <div class="d-flex flex-column justify-content-center">
+      <h2 class="p-2">Articles recommandés pour le user n°{{selected_id}}</h2>
+      {% for num in result: %}
+        <label>{{num}}</label>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+</div>
+
+<script type="text/javascript">// <![CDATA[
+  function loading(){
+      $("#loading").show();
+      $("#content").hide();       
+  }
+// ]]></script>
+
+{%endblock%}

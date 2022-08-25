@@ -1,0 +1,29 @@
+.page {
+    padding: 3%;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, label {
+    text-align: center;
+}
+
+#loading {
+    display: none;
+    cursor: wait;
+}
+
+.gif {
+    height: 35px;
+    width: 35px;
+}
