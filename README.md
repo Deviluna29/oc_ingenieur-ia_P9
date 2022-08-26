@@ -35,6 +35,6 @@ Le dossier "articles" doit contenir ce qui suit :
 
 ## Application Web
 
-Url de l'application flask, hébergée sur Azure App : <a href = https://ocp9-recommandation.azurewebsites.net//>https://ocp9-recommandation.azurewebsites.net//</a>
+Url de l'application flask, hébergée sur Azure App : <a href = https://ocp9-recommandation.azurewebsites.net/>https://ocp9-recommandation.azurewebsites.net/</a>
 
 (Après 20min d'inactivité, Azure App stop l'application. En cas de nouvelle requête il faut donc attendre quelques minutes pour que l'application redémarre)
