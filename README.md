@@ -2,9 +2,9 @@
 
 Les résultats des notebooks en pages HTML :
 
-<a href = https://deviluna29.github.io/oc_ingenieur-ia_p9/P09_00_notebook_analyse>Analyse du jeu de données</a>
+<a href = https://deviluna29.github.io/oc_ingenieur-ia_P9/P09_00_notebook_analyse>Analyse du jeu de données</a>
 
-<a href = https://deviluna29.github.io/oc_ingenieur-ia_p9/P09_01_notebook_modelisation>Modélisation et entraînement des différents modèles</a>
+<a href = https://deviluna29.github.io/oc_ingenieur-ia_P9/P09_01_notebook_modelisation>Modélisation et entraînement des différents modèles</a>
 
 ## Installation de l'environnement virtuel
 
